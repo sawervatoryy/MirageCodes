@@ -1,0 +1,133 @@
+# ╔══════════════════════════════════════════════════════════╗
+# ║  MirageCodes — система промокодов                        ║
+# ║  MirageStudio  ·  Discord: sawervatoryy                  ║
+# ╚══════════════════════════════════════════════════════════╝
+# Сами промокоды лежат в codes.yml (подробности — в README).
+# Цвета: &c &f &4 и т.д., HEX — &#RRGGBB. Пустое сообщение ("") = не отправлять.
+
+settings:
+  # Регистр для новых промокодов по умолчанию (true — WELCOME и welcome разные)
+  case-sensitive-default: false
+
+  # Задержка между попытками /code (секунды). 0 — выключено.
+  cooldown-seconds: 3
+
+  # Защита от перебора: после N неверных кодов подряд игрок блокируется
+  max-failed-attempts: 5      # 0 — выключить защиту
+  lockout-seconds: 120
+
+  # Что делать, если предметы награды не помещаются в инвентарь:
+  #   drop — выбросить остаток рядом с игроком
+  #   deny — не активировать код, пока не освободится место (использование не списывается)
+  inventory-full: drop
+
+  # Часовой пояс для дат: system или, например, Europe/Moscow
+  timezone: system
+  # Формат дат в сообщениях (хранятся в codes.yml всегда как yyyy-MM-dd HH:mm:ss)
+  date-format: "dd.MM.yyyy HH:mm"
+
+  # Как часто сохранять данные об использовании (секунды)
+  autosave-seconds: 30
+
+  # Писать активации в консоль и в файл redeems.log
+  console-log: true
+  log-redeems: true
+
+  # Звуки (ключи звуков Minecraft; пустой sound — без звука)
+  sounds:
+    success:
+      sound: "entity.player.levelup"
+      volume: 1.0
+      pitch: 1.2
+    fail:
+      sound: "entity.villager.no"
+      volume: 1.0
+      pitch: 1.0
+
+  # Уведомление в Discord при активации
+  discord-webhook:
+    enabled: false
+    url: ""
+    content: "🎁 **%player%** активировал промокод **%code%** (%uses%/%max%)"
+
+messages:
+  prefix: "&c&lMirageCodes &8» &f"
+
+  usage: "&fИспользование: &c/%label% <промокод>"
+  no-permission: "&cУ вас нет прав для этого."
+  players-only: "&cЭта команда доступна только игрокам."
+  cooldown: "&fПодождите &c%time% &fперед следующей попыткой."
+  locked: "&cСлишком много неверных попыток! &fПовторите через &c%time%&f."
+  invalid: "&cТакого промокода не существует. &fОсталось попыток: &c%left%"
+  disabled: "&cЭтот промокод отключён."
+  not-started: "&cЭтот промокод ещё не активен. &fНачало: &c%date%"
+  expired: "&cСрок действия этого промокода истёк."
+  no-code-permission: "&cУ вас нет права использовать этот промокод."
+  limit-global: "&cЭтот промокод уже использован максимальное число раз."
+  limit-player: "&cВы уже использовали этот промокод &f(лимит: &c%max%&f)&c."
+  inventory-full-deny: "&cВ инвентаре недостаточно места. Освободите слоты и повторите."
+  inventory-full-drop: "&fИнвентарь заполнен — часть предметов выпала рядом с вами."
+  success: "&fПромокод &c%code% &fуспешно активирован!"
+
+  admin:
+    usage: "&fИспользование: &c%usage%"
+    invalid-id: "&cID промокода: 2–32 символа — буквы, цифры, _ и -."
+    exists: "&cПромокод &f%code% &cуже существует."
+    not-found: "&cПромокод &f%code% &cне найден."
+    created: "&fПромокод &c%code% &fсоздан. Добавьте награды: &c/mcodes addcmd|additem|addmsg %code% ..."
+    deleted: "&fПромокод &c%code% &fудалён."
+    toggled: "&fПромокод &c%code%&f: &c%state%&f."
+    set-uses: "&fОбщий лимит &c%code%&f: &c%value%&f."
+    set-per-player: "&fЛимит на игрока &c%code%&f: &c%value%&f."
+    set-expire: "&fСрок действия &c%code%&f до: &c%value%&f."
+    set-start: "&fНачало действия &c%code%&f: &c%value%&f."
+    set-perm: "&fПраво для &c%code%&f: &c%value%&f."
+    set-case: "&fУчёт регистра для &c%code%&f: &c%value%&f."
+    set-message: "&fСообщение об успехе для &c%code% &fобновлено."
+    reward-added: "&fНаграда добавлена в &c%code%&f: &7%reward%"
+    reward-removed: "&fНаграда &c#%index% &fудалена из &c%code%&f."
+    bad-number: "&cУкажите корректное число."
+    bad-index: "&cНет награды с таким номером. См. &f/mcodes info"
+    bad-date: "&cНеверная дата. Примеры: &f2026-12-31 23:59&c, &f31.12.2026&c, &f7d&c, &fnever"
+    bad-material: "&cНеизвестный предмет: &f%value%"
+    bad-generate: "&cКоличество 1–1000, длина 4–24, префикс до 16 символов (буквы/цифры/_), всего не более 32."
+    hold-item: "&cВозьмите предмет в основную руку."
+    player-not-found: "&cИгрок &f%player% &cне найден (он должен был заходить на сервер)."
+    reset-all: "&fИспользования &c%code% &fсброшены."
+    reset-player: "&fИспользования &c%code% &fдля &c%player% &fсброшены."
+    generated: "&fСоздано &c%count% &fодноразовых кодов по шаблону &c%code%&f. Файл: &c%file%"
+    reloaded: "&fКонфигурация и промокоды перезагружены. Кодов: &c%count%"
+    list-empty: "&cПромокодов пока нет. Создайте: &f/mcodes create <код>"
+    list-header: "&8&m-----&r &c&lПромокоды &8(&f%page%&8/&f%pages%&8, всего &f%total%&8) &8&m-----"
+    list-entry: "&8• &c%code% &8[%status%&8] &7использовано: &f%uses%&7/&f%max%"
+    info:
+      - "&8&m-----&r &c&lПромокод &f%code% &8&m-----"
+      - "&fСтатус: &c%enabled% &8| &fРегистр: &c%case%"
+      - "&fИспользований: &c%uses%&f/&c%max% &8| &fНа игрока: &c%per_player%"
+      - "&fНачало: &c%start% &8| &fКонец: &c%expires%"
+      - "&fПраво: &c%permission%"
+      - "&fСвоё сообщение: &r%message%"
+      - "&fНаград: &c%rewards%"
+    info-reward: "&8  %index%. &f%reward%"
+    help:
+      - "&8&m------&r &c&lMirageCodes &8&m------"
+      - "&c/%label% create <код> &8— &fсоздать промокод"
+      - "&c/%label% delete <код> &8— &fудалить"
+      - "&c/%label% list [стр] &8— &fсписок"
+      - "&c/%label% info <код> &8— &fнастройки и награды"
+      - "&c/%label% toggle <код> &8— &fвключить/отключить"
+      - "&c/%label% setuses <код> <число|unlimited> &8— &fобщий лимит"
+      - "&c/%label% setperplayer <код> <число|unlimited> &8— &fлимит на игрока"
+      - "&c/%label% setexpire <код> <дата|7d|never> &8— &fдо какого времени"
+      - "&c/%label% setstart <код> <дата|1h|none> &8— &fс какого времени"
+      - "&c/%label% setperm <код> <право|none> &8— &fтребуемое право"
+      - "&c/%label% setcase <код> <true|false> &8— &fучёт регистра"
+      - "&c/%label% setmessage <код> <текст|none> &8— &fсвоё сообщение об успехе"
+      - "&c/%label% addcmd <код> [console|player] <команда> &8— &fнаграда-команда"
+      - "&c/%label% additem <код> [МАТЕРИАЛ] [кол-во] &8— &fнаграда-предмет (из руки, если без аргументов)"
+      - "&c/%label% addmsg <код> <текст> &8— &fсообщение игроку"
+      - "&c/%label% addbroadcast <код> <текст> &8— &fобъявление на весь сервер"
+      - "&c/%label% rmreward <код> <номер> &8— &fудалить награду"
+      - "&c/%label% reset <код> [игрок] &8— &fсбросить использования"
+      - "&c/%label% generate <шаблон> <кол-во> [длина] [префикс] &8— &fодноразовые коды"
+      - "&c/%label% reload &8— &fперезагрузка"

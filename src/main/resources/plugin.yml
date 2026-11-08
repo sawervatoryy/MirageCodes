@@ -1,0 +1,31 @@
+name: MirageCodes
+version: '${version}'
+main: org.example.sawervatoryy.mirageCodes.MirageCodes
+api-version: '1.21.4'
+load: POSTWORLD
+author: sawervatoryy
+description: Система промокодов /code — награды командами и предметами, лимиты, сроки, защита от перебора.
+
+commands:
+  code:
+    description: Активировать промокод
+    usage: /<command> <промокод>
+    aliases: [promocode, код, промокод]
+  miragecodes:
+    description: Управление промокодами
+    usage: /<command> help
+    aliases: [mcodes, mcode]
+
+permissions:
+  miragecodes.use:
+    description: Активация промокодов (/code)
+    default: true
+  miragecodes.admin:
+    description: Управление промокодами (/miragecodes)
+    default: op
+  miragecodes.bypass.cooldown:
+    description: Без задержки между попытками /code
+    default: op
+  miragecodes.bypass.lockout:
+    description: Без блокировки за неверные коды
+    default: op

@@ -1,0 +1,86 @@
+# Промокоды MirageCodes. Полное описание формата — в README.
+# После ручных правок выполните /mcodes reload.
+# Это ПРИМЕРЫ — удалите их, когда настроите свои.
+# Даты берите в кавычки: "2030-01-01 00:00:00".
+codes:
+  WELCOME:
+    enabled: true
+    case-sensitive: false
+    max-uses: -1                # общий лимит (-1 = без ограничений)
+    max-uses-per-player: 1      # сколько раз один игрок (-1 = без ограничений)
+    start: none
+    expires: never
+    permission: ""
+    message: ""                 # своё сообщение об успехе (пусто = стандартное)
+    rewards:
+      - type: item
+        material: BREAD
+        amount: 16
+        name: "&c&lХлеб новичка"
+        lore:
+          - "&fПодарок от &cMirageCodes"
+          - "&fДля игрока &c%player%"
+      - type: message
+        text: "&fДобро пожаловать, &c%player%&f!"
+
+  MIRAGE:
+    enabled: true
+    case-sensitive: false
+    max-uses: 100
+    max-uses-per-player: 1
+    start: none
+    expires: "2030-01-01 00:00:00"
+    permission: ""
+    message: "&fВы активировали &c%code%&f. Вы %uses%-й игрок из 100!"
+    rewards:
+      - type: command
+        as: console
+        command: "give %player% diamond 3"
+      - type: title
+        title: "&c&lMirage"
+        subtitle: "&fНаграда получена"
+        fade-in: 10
+        stay: 60
+        fade-out: 10
+      - type: sound
+        sound: "entity.experience_orb.pickup"
+        volume: 1.0
+        pitch: 1.0
+
+  LUCKY:
+    enabled: true
+    case-sensitive: false
+    max-uses: -1
+    max-uses-per-player: 1
+    start: none
+    expires: never
+    permission: ""
+    message: ""
+    rewards:
+      - type: item            # выдаётся всегда
+        material: GOLD_INGOT
+        amount: 8
+      - type: item            # шанс 25%
+        chance: 25
+        material: DIAMOND
+        amount: 4
+        name: "&c&lУдача"
+        enchantments:
+          - "unbreaking:3"
+      - type: broadcast       # объявление через 1 секунду (20 тиков)
+        delay: 20
+        text: "&c%player% &fактивировал промокод &c%code%&f!"
+
+  VIP-GIFT:
+    enabled: true
+    case-sensitive: true      # только именно так: VIP-GIFT
+    max-uses: -1
+    max-uses-per-player: 3
+    start: none
+    expires: never
+    permission: "miragecodes.vip"   # только игрокам с этим правом
+    message: ""
+    rewards:
+      - type: command
+        as: console
+        command: "give %player% netherite_ingot 1"
